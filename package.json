@@ -1,0 +1,8 @@
+{
+  "name": "PasswordWidget",
+  "version": "1.0.0",
+  "description": "A browser based widget for displaying the password stregth on registration pages",
+  "main": "pwdwidget.js",
+  "author": "Devin Weaver <suki@tritarget.org>",
+  "license": "LGPL v3"
+}
