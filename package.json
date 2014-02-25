@@ -4,5 +4,12 @@
   "description": "A browser based widget for displaying the password stregth on registration pages",
   "main": "pwdwidget.js",
   "author": "Devin Weaver <suki@tritarget.org>",
-  "license": "LGPL v3"
+  "license": "LGPL v3",
+  "devDependencies": {
+    "gulp": "~3.5.2",
+    "gulp-util": "~2.2.14",
+    "gulp-browserify": "~0.4.6",
+    "gulp-uglify": "~0.2.1",
+    "gulp-clean": "~0.2.4"
+  }
 }
