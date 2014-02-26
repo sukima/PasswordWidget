@@ -11,7 +11,10 @@ var paths = {
 
 gulp.task('scripts', function() {
   gulp.src(paths.scripts)
-    .pipe(browserify())
+    .pipe(browserify({
+      standalown: true,
+      debug: !gutil.env.production
+    }))
     .pipe(gutil.env.production ? uglify() : gutil.noop())
     .pipe(gulp.dest(paths.dest));
 });
