@@ -6,7 +6,8 @@ var clean      = require('gulp-clean');
 
 var paths = {
   dest:    'build',
-  scripts: 'lib/PasswordWidget.js'
+  scripts: 'lib/PasswordWidget.js',
+  specs:   'test/specs.js'
 };
 
 gulp.task('scripts', function() {
@@ -16,6 +17,15 @@ gulp.task('scripts', function() {
       debug: !gutil.env.production
     }))
     .pipe(gutil.env.production ? uglify() : gutil.noop())
+    .pipe(gulp.dest(paths.dest));
+});
+
+gulp.task('specs', function() {
+  gulp.src(paths.specs)
+    .pipe(browserify({
+      standalown: true,
+      debug: true
+    }))
     .pipe(gulp.dest(paths.dest));
 });
 

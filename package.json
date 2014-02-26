@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A browser based widget for displaying the password stregth on registration pages",
   "main": "pwdwidget.js",
+  "scripts": {
+    "test": "testem ci"
+  },
   "author": "Devin Weaver <suki@tritarget.org>",
   "license": "LGPL v3",
   "devDependencies": {
@@ -10,6 +13,13 @@
     "gulp-util": "~2.2.14",
     "gulp-browserify": "~0.4.6",
     "gulp-uglify": "~0.2.1",
-    "gulp-clean": "~0.2.4"
+    "gulp-clean": "~0.2.4",
+    "testem": "~0.6.7",
+    "sinon": "~1.8.1",
+    "chai": "~1.9.0",
+    "mocha": "~1.17.1",
+    "chai-jquery": "~1.2.1",
+    "jquery": "~2.1.0",
+    "laplace": "0.0.2"
   }
 }
