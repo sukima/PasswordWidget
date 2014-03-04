@@ -19,6 +19,7 @@
     "mocha": "~1.17.1",
     "chai-jquery": "~1.2.1",
     "jquery": "~2.1.0",
-    "laplace": "0.0.2"
+    "laplace": "0.0.2",
+    "js-fixtures": "~1.5.1"
   }
 }

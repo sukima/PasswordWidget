@@ -2,6 +2,9 @@
   "framework": "mocha+chai",
   "before_tests": "gulp specs",
   "serve_files": [
+    "node_modules/jquery/dist/jquery.js",
+    "node_modules/chai-jquery/chai-jquery.js",
+    "node_modules/js-fixtures/fixtures.js",
     "node_modules/sinon/pkg/sinon.js",
     "build/specs.js"
   ],
