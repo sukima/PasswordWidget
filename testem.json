@@ -1,5 +1,6 @@
 {
   "framework": "mocha+chai",
+  "before_tests": "gulp specs",
   "serve_files": [
     "build/specs.js"
   ],
@@ -16,6 +17,5 @@
     "Firefox",
     "Safari",
     "PhantomJS"
-  ],
-  "before_tests": "gulp specs"
+  ]
 }
