@@ -3,7 +3,7 @@ var expect = chai.expect;
 var laplace = require('laplace');
 var PasswordWidget = require('../lib/passwordwidget');
 
-describe('PasswordWidget', function() {
+describe('PasswordWidget Utilities', function() {
   var sandbox = sinon.sandbox.create();
 
   beforeEach(function() {
@@ -177,14 +177,5 @@ describe('PasswordWidget', function() {
       });
     });
   });
-
-  // describe('Configuration Options', function() {
-  //   var options = [
-  //     'showMask',
-  //     'showGenerateLink',
-  //     'showStrength',
-  //     'showStrengthText'
-  //   ];
-  // });
 });
 /* vim:set ts=2 sw=2 et fdm=marker: */
