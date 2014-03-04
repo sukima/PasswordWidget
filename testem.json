@@ -2,6 +2,7 @@
   "framework": "mocha+chai",
   "before_tests": "gulp specs",
   "serve_files": [
+    "node_modules/sinon/pkg/sinon.js",
     "build/specs.js"
   ],
   "src_files": [
