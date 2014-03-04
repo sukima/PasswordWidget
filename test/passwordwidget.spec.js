@@ -123,58 +123,58 @@ describe('PasswordWidget', function() {
         expect( PasswordWidget.strengthScore('Ab$$1&^4.....') ).to.equal(5);
       });
     });
-  });
 
-  describe('#scoreColor', function() {
-    beforeEach(function() {
-      this.origColors = PasswordWidget.defaults.colors;
-      PasswordWidget.defaults.colors = ['red', 'green', 'blue'];
+    describe('#scoreColor', function() {
+      beforeEach(function() {
+        this.origColors = PasswordWidget.defaults.colors;
+        PasswordWidget.defaults.colors = ['red', 'green', 'blue'];
+      });
+
+      afterEach(function() {
+        PasswordWidget.defaults.colors = this.origColors;
+      });
+
+      it('returns a string based on score value', function() {
+        expect( PasswordWidget.scoreColor(-1) ).to.be.equal('red');
+        expect( PasswordWidget.scoreColor( 0) ).to.be.equal('red');
+        expect( PasswordWidget.scoreColor( 1) ).to.be.equal('green');
+        expect( PasswordWidget.scoreColor( 2) ).to.be.equal('blue');
+        expect( PasswordWidget.scoreColor( 3) ).to.be.equal('blue');
+      });
     });
 
-    afterEach(function() {
-      PasswordWidget.defaults.colors = this.origColors;
+    describe('#scoreText', function() {
+      it('returns tooCommon string with a score below 0 (edge case)', function() {
+        expect( PasswordWidget.scoreText(-1) )
+          .to.equal(PasswordWidget.defaults.locale.tooCommon);
+      });
+
+      it('returns an empty string with a 0 score', function() {
+        expect( PasswordWidget.scoreText(0) ).to.equal('');
+      });
+
+      it('returns the strength as text based on score', function() {
+        expect( PasswordWidget.scoreText(1) )
+          .to.equal(PasswordWidget.defaults.locale.weak);
+        expect( PasswordWidget.scoreText(2) )
+          .to.equal(PasswordWidget.defaults.locale.weak);
+        expect( PasswordWidget.scoreText(3) )
+          .to.equal(PasswordWidget.defaults.locale.medium);
+        expect( PasswordWidget.scoreText(4) )
+          .to.equal(PasswordWidget.defaults.locale.good);
+        expect( PasswordWidget.scoreText(5) )
+          .to.equal(PasswordWidget.defaults.locale.excelent);
+      });
     });
 
-    it('returns a string based on score value', function() {
-      expect( PasswordWidget.scoreColor(-1) ).to.be.equal('red');
-      expect( PasswordWidget.scoreColor( 0) ).to.be.equal('red');
-      expect( PasswordWidget.scoreColor( 1) ).to.be.equal('green');
-      expect( PasswordWidget.scoreColor( 2) ).to.be.equal('blue');
-      expect( PasswordWidget.scoreColor( 3) ).to.be.equal('blue');
-    });
-  });
-
-  describe('#scoreText', function() {
-    it('returns tooCommon string with a score below 0 (edge case)', function() {
-      expect( PasswordWidget.scoreText(-1) )
-        .to.equal(PasswordWidget.defaults.locale.tooCommon);
-    });
-
-    it('returns an empty string with a 0 score', function() {
-      expect( PasswordWidget.scoreText(0) ).to.equal('');
-    });
-
-    it('returns the strength as text based on score', function() {
-      expect( PasswordWidget.scoreText(1) )
-        .to.equal(PasswordWidget.defaults.locale.weak);
-      expect( PasswordWidget.scoreText(2) )
-        .to.equal(PasswordWidget.defaults.locale.weak);
-      expect( PasswordWidget.scoreText(3) )
-        .to.equal(PasswordWidget.defaults.locale.medium);
-      expect( PasswordWidget.scoreText(4) )
-        .to.equal(PasswordWidget.defaults.locale.good);
-      expect( PasswordWidget.scoreText(5) )
-        .to.equal(PasswordWidget.defaults.locale.excelent);
-    });
-  });
-
-  describe('#scoreMeterWidth', function() {
-    it('returns a css size based on score', function() {
-      expect( PasswordWidget.scoreMeterWidth(-1) ).to.equal(0);
-      expect( PasswordWidget.scoreMeterWidth( 0) ).to.equal(0);
-      for (var i = 1; i < 5; i++) {
-        expect( PasswordWidget.scoreMeterWidth(i) ).to.match(/^\d+px$/);
-      }
+    describe('#scoreMeterWidth', function() {
+      it('returns a css size based on score', function() {
+        expect( PasswordWidget.scoreMeterWidth(-1) ).to.equal(0);
+        expect( PasswordWidget.scoreMeterWidth( 0) ).to.equal(0);
+        for (var i = 1; i < 5; i++) {
+          expect( PasswordWidget.scoreMeterWidth(i) ).to.match(/^\d+px$/);
+        }
+      });
     });
   });
 
