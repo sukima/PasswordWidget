@@ -1,4 +1,4 @@
-# PasswordWidget
+# PasswordWidget [![Build Status](https://travis-ci.org/sukima/PasswordWidget.png?branch=master)](https://travis-ci.org/sukima/PasswordWidget)
 
 A simple JavaScript plugin which injects a password strength meter into a web
 page. Includes features such as generate password, strength based on entropy,
