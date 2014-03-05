@@ -4,33 +4,33 @@ var browserify = require('gulp-browserify');
 var uglify     = require('gulp-uglify');
 var clean      = require('gulp-clean');
 
-var paths = {
+var config = {
+  name:    'PasswordWidget',
   dest:    'build',
-  scripts: 'lib/PasswordWidget.js',
+  scripts: 'lib/passwordwidget.js',
   specs:   'test/specs.js'
 };
 
 gulp.task('scripts', function() {
-  gulp.src(paths.scripts)
+  gulp.src(config.scripts)
     .pipe(browserify({
-      standalown: true,
-      debug: !gutil.env.production
+      standalone: config.name,
+      debug:      !gutil.env.production
     }))
     .pipe(gutil.env.production ? uglify() : gutil.noop())
-    .pipe(gulp.dest(paths.dest));
+    .pipe(gulp.dest(config.dest));
 });
 
 gulp.task('specs', function() {
-  gulp.src(paths.specs)
+  gulp.src(config.specs)
     .pipe(browserify({
-      standalown: true,
       debug: true
     }))
-    .pipe(gulp.dest(paths.dest));
+    .pipe(gulp.dest(config.dest));
 });
 
 gulp.task('clean', function() {
-  gulp.src(paths.dest, {read: false})
+  gulp.src(config.dest, {read: false})
     .pipe(clean());
 });
 
