@@ -26,12 +26,6 @@ describe('PasswordWidget Utilities', function() {
   });
 
   describe('static methods', function() {
-    describe('#generatePassword', function() {
-      it("returns a string", function() {
-        expect( PasswordWidget.generatePassword() ).to.equal(this.password);
-      });
-    });
-
     describe('#isACommonPassword', function() {
       it('returns false when commonPasswords is empty (default)', function() {
         PasswordWidget.setCommonPasswords({});
