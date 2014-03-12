@@ -11,14 +11,7 @@ describe('PasswordWidget', function() {
   describe('Constructor', function() {
     it('takes a selector as a string');
     it('takes a DOMElement');
-    it('takes an options object');
     it('assignes DOMElements to elements property');
-    //   var options = [
-    //     'showMask',
-    //     'showGenerateLink',
-    //     'showStrength',
-    //     'showStrengthText'
-    //   ];
   });
 
   describe('::attach', function() {
