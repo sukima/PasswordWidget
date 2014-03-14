@@ -7,6 +7,10 @@
   },
   "author": "Devin Weaver <suki@tritarget.org>",
   "license": "LGPL v3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sukima/PasswordWidget.git"
+  },
   "devDependencies": {
     "gulp": "~3.5.2",
     "gulp-util": "~2.2.14",
