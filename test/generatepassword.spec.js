@@ -2,7 +2,7 @@ var expect = chai.expect;
 var laplace = require('laplace');
 var generatePassword = require('../lib/generatepassword');
 
-describe('generatePassword', function() {
+describe('#generatePassword', function() {
   var sandbox = sinon.sandbox.create();
 
   beforeEach(function() {

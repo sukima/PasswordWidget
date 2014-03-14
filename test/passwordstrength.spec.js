@@ -1,6 +1,11 @@
 var expect = chai.expect;
 var PasswordStrength = require('../lib/passwordstrength');
 
+function toBinaryStr(num) {
+  num = Number(num).toString(2);
+  return ('000000' + num).slice(-6);
+}
+
 describe('PasswordStrength', function() {
   var f = PasswordStrength.SCORE_FLAGS; // alias
 
@@ -31,7 +36,7 @@ describe('PasswordStrength', function() {
   describe('#flags', function() {
     testCases.forEach(function(testCase) {
       var password = testCase[0], expected = testCase[2];
-      var message = 'returns flags ' + Number(expected).toString(2) + ' for password "' +
+      var message = 'returns flags ' + toBinaryStr(expected) + ' for password "' +
         password + '" (' + password.length + ')';
       it(message, function() {
         expect( PasswordStrength.flags(password) ).to.equal(expected);
