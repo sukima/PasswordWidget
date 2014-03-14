@@ -1,4 +1,3 @@
-var expect = chai.expect;
 var CommonPasswords = require('../lib/commonpasswords');
 
 describe('CommonPasswords', function() {
@@ -11,13 +10,13 @@ describe('CommonPasswords', function() {
   describe('#isCommon', function() {
     it('returns false when password list is empty (default)', function() {
       CommonPasswords.setPasswords({});
-      expect( CommonPasswords.isCommon('monkey') ).to.be.false;
+      expect( CommonPasswords.isCommon('monkey') ).to.be(false);
     });
 
     it('returns boolean based on password existence in dictionary lookup', function() {
       CommonPasswords.addPasswords(['monkey']);
-      expect( CommonPasswords.isCommon('monkey') ).to.be.true;
-      expect( CommonPasswords.isCommon('__password_not_in_list__') ).to.be.false;
+      expect( CommonPasswords.isCommon('monkey') ).to.be(true);
+      expect( CommonPasswords.isCommon('__password_not_in_list__') ).to.be(false);
     });
   });
 
@@ -56,7 +55,7 @@ describe('CommonPasswords', function() {
       });
 
       it('registers the passwords as common', function() {
-        expect( CommonPasswords.isCommon('test_pass') ).to.be.true;
+        expect( CommonPasswords.isCommon('test_pass') ).to.be(true);
       });
     });
 

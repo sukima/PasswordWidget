@@ -1,4 +1,3 @@
-var expect = chai.expect;
 var PasswordWidget = require('../lib/passwordwidget');
 
 describe('PasswordWidget Utilities', function() {
@@ -9,7 +8,7 @@ describe('PasswordWidget Utilities', function() {
     });
 
     it('exports a colors array', function() {
-      expect( PasswordWidget.defaults.colors ).to.be.an.instanceof(Array);
+      expect( PasswordWidget.defaults.colors ).to.be.an(Array);
     });
   });
 

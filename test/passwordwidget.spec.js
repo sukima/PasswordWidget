@@ -1,4 +1,3 @@
-var expect = chai.expect;
 var PasswordWidget = require('../lib/passwordwidget');
 
 describe('PasswordWidget', function() {

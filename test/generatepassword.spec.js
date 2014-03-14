@@ -1,4 +1,3 @@
-var expect = chai.expect;
 var laplace = require('laplace');
 var generatePassword = require('../lib/generatepassword');
 

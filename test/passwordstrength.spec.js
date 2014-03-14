@@ -1,4 +1,3 @@
-var expect = chai.expect;
 var PasswordStrength = require('../lib/passwordstrength');
 
 function toBinaryStr(num) {
