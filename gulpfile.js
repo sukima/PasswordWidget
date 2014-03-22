@@ -15,7 +15,7 @@ var config = {
   specs:   'test/specs.js'
 };
 
-gulp.task('scripts', function() {
+gulp.task('main', function() {
   var preamble = fs.readFileSync(config.header, 'utf8');
   gulp.src(config.scripts)
     .pipe(browserify({
@@ -40,5 +40,9 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
-gulp.task('default', ['scripts']);
+gulp.task('default', ['main', 'specs'], function() {
+  gutil.log('Saved ' + config.name +
+    (gutil.env.production ? ' (minified)' : ' (debug)') +
+    ' to ' + config.dest);
+});
 /* vim:set ts=2 sw=2 et fdm=marker: */
