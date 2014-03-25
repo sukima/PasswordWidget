@@ -1,48 +1,72 @@
-var fs         = require('fs');
-var gulp       = require('gulp');
-var gutil      = require('gulp-util');
-var browserify = require('gulp-browserify');
-var uglify     = require('gulp-uglify');
-var clean      = require('gulp-clean');
-var header     = require('gulp-header');
-var pkg        = require('./package.json');
+var fs          = require('fs');
+var streamqueue = require('streamqueue');
+var gulp        = require('gulp');
+var gutil       = require('gulp-util');
+var browserify  = require('gulp-browserify');
+var uglify      = require('gulp-uglify');
+var clean       = require('gulp-clean');
+var header      = require('gulp-header');
+var concat      = require('gulp-concat');
+var pkg         = require('./package.json');
+
+function es5_shim() {
+  var es5Path = require.resolve('es5-shim');
+  gutil.log('Packaging ' + gutil.colors.blue('es5-shim'));
+  return gulp.src(es5Path);
+}
 
 var config = {
-  name:    'PasswordWidget',
-  dest:    'build',
-  header:  'lib/header.ejs',
-  scripts: 'lib/passwordwidget.js',
-  specs:   'test/specs.js'
+  name:     'PasswordWidget',
+  destName: 'passwordwidget.js',
+  destDir:  'build',
+  header:   'lib/header.ejs',
+  scripts:  'lib/passwordwidget.js',
+  specs:    'test/specs.js'
 };
+
+gutil.log('Environment', gutil.colors.blue(gulp.env.production ? 'Production' : 'Development'));
 
 gulp.task('main', function() {
   var preamble = fs.readFileSync(config.header, 'utf8');
-  gulp.src(config.scripts)
+  var stream = streamqueue({objectMode: true});
+
+  var bundle = gulp.src(config.scripts)
     .pipe(browserify({
-      standalone: config.name,
-      debug:      !gutil.env.production
-    }))
+      insertGlobals:    false,
+      insertGlobalVars: false,
+      standalone:       config.name,
+      debug:            !gutil.env.production
+    }));
+
+  if (gutil.env.shim) { stream.queue(es5_shim()); }
+  stream.queue(bundle);
+
+  stream.done()
+    .pipe(gutil.env.shim ? concat(config.destName) : gutil.noop())
     .pipe(gutil.env.production ? uglify() : gutil.noop())
     .pipe(header(preamble, pkg))
-    .pipe(gulp.dest(config.dest));
+    .pipe(gulp.dest(config.destDir));
 });
 
 gulp.task('specs', function() {
   gulp.src(config.specs)
     .pipe(browserify({
-      debug: true
+      insertGlobals:    false,
+      insertGlobalVars: false,
+      debug:            true
     }))
-    .pipe(gulp.dest(config.dest));
+    .pipe(gulp.dest(config.destDir));
 });
 
 gulp.task('clean', function() {
-  gulp.src(config.dest, {read: false})
+  gulp.src(config.destDir, {read: false})
     .pipe(clean());
 });
 
 gulp.task('default', ['main', 'specs'], function() {
-  gutil.log('Saved ' + config.name +
+  gutil.log('Saved ' + gutil.colors.blue(config.name) +
+    (gutil.env.shim ? ' (with es5-shim)' : '') +
     (gutil.env.production ? ' (minified)' : ' (debug)') +
-    ' to ' + config.dest);
+    ' to ' + gutil.colors.magenta(config.destDir +'/'+ config.destName));
 });
 /* vim:set ts=2 sw=2 et fdm=marker: */
