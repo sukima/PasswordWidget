@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "es5-shim": "~2.3.0",
-    "defaults": "~1.0.0",
     "aemitter": "0.0.1"
   }
 }
