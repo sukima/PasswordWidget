@@ -39,15 +39,12 @@ describe('PasswordWidget', function() {
   });
 
   describe('::attach', function() {
-    it('throws an exception when PasswordWidget was destroyed');
+  });
+
+  describe('::attachTo', function() {
   });
 
   describe('::detach', function() {
-    it('throws an exception when PasswordWidget was destroyed');
-  });
-
-  describe('::destroy', function() {
-    it('sets the DOMElements to null');
   });
 });
 /* vim:set ts=2 sw=2 et fdm=marker: */
