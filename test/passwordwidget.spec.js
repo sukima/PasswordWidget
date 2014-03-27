@@ -2,18 +2,14 @@ var PasswordWidget = require('../lib/passwordwidget');
 
 describe('PasswordWidget', function() {
   beforeEach(function() {
-    fixtures.set('<input id="test-input" type="password"/>');
-    this.$pwNode = $('#test-input',  fixtures.window().document);
+    setFixtures('<input id="test-input" type="password"/>');
+    this.$pwNode = $('#test-input');
     this.pwWidget = new PasswordWidget(this.$pwNode.get(0));
-  });
-
-  afterEach(function() {
-    fixtures.cleanUp();
   });
 
   describe('Constructor', function() {
     it('adds "pw-input" class to input element', function() {
-      $expect(this.$pwNode).to.have.class('pw-input');
+      $expect(this.$pwNode).to.have['class']('pw-input');
     });
 
     it('throws a TypeError if element is not an input field', function() {

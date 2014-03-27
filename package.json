@@ -24,7 +24,6 @@
     "mocha": "~1.17.1",
     "expect.js": "~0.3.1",
     "jquery": "~1.11.0",
-    "js-fixtures": "~1.5.1",
     "laplace": "0.0.2",
     "sinon": "~1.9.0"
   },
