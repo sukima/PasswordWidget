@@ -29,6 +29,17 @@ describe('PasswordWidget', function() {
     });
   });
 
+  describe('Events', function() {
+    it('emits a "update" event when input emits a "keyup" event', function() {
+      var callback = sinon.stub();
+      this.pwWidget.on('update', callback);
+      // Have to use dispatchEvent because jQuery.trigger will not fire an
+      // event attached via addEventListener.
+      this.$pwNode.get(0).dispatchEvent(new Event('keyup'));
+      sinon.assert.called(callback);
+    });
+  });
+
   describe('::attach', function() {
   });
 
