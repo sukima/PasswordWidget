@@ -12,6 +12,9 @@ describe('PasswordWidget', function() {
   });
 
   describe('Constructor', function() {
+    it('adds "pw-input" class to input element', function() {
+      $expect(this.$pwNode).to.have.class('pw-input');
+    });
   });
 
   describe('::attach', function() {
