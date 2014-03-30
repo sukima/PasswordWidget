@@ -25,10 +25,31 @@ describe('PasswordWidget', function() {
     });
   });
 
+  function testAttachBehaviour() {
+    it('appends a container below the input element', function() {
+      $expect(this.container).to.have['class']('password-widget');
+      $expect(this.container).to.have['class']('pw-wrapper');
+    });
+  }
+
   describe('::attach', function() {
+    beforeEach(function() {
+      this.pwWidget.attach();
+      this.container = this.$pwNode.next();
+    });
+
+    testAttachBehaviour();
   });
 
   describe('::attachTo', function() {
+    beforeEach(function() {
+      appendSetFixtures('<div id="test-attachTo"></div>');
+      var attachToElement = $('#test-attachTo');
+      this.pwWidget.attachTo(attachToElement.get(0));
+      this.container = attachToElement.children().get(0);
+    });
+
+    testAttachBehaviour();
   });
 
   describe.skip('::detach', function() {
