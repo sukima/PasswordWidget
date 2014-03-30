@@ -31,7 +31,7 @@ describe('PasswordWidget', function() {
   describe('::attachTo', function() {
   });
 
-  describe('::detach', function() {
+  describe.skip('::detach', function() {
   });
 
   describe('Events', function() {
@@ -67,7 +67,7 @@ describe('PasswordWidget', function() {
     });
   });
 
-  describe('Unobtrusive DOM manipulations', function() {
+  describe.skip('Unobtrusive DOM manipulations', function() {
   });
 });
 /* vim:set ts=2 sw=2 et fdm=marker: */
