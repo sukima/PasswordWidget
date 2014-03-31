@@ -1,3 +1,4 @@
+require('./dombuilder.spec.js');
 require('./passwordstrength.spec.js');
 require('./commonpasswords.spec.js');
 require('./generatepassword.spec.js');
