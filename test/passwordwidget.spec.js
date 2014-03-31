@@ -29,6 +29,12 @@ describe('PasswordWidget', function() {
     });
   });
 
+  function testChainability() {
+    it('is chainable', function() {
+      expect(this.result).to.be(this.pwWidget);
+    });
+  }
+
   function testAttachBehaviour() {
     it('appends a container below the input element', function() {
       $expect(this.container).to.have['class']('password-widget');
@@ -36,24 +42,26 @@ describe('PasswordWidget', function() {
     });
   }
 
-  describe('::attach', function() {
+  describe('#attach', function() {
     beforeEach(function() {
-      this.pwWidget.attach();
+      this.result = this.pwWidget.attach();
       this.container = this.$pwNode.next();
     });
 
     testAttachBehaviour();
+    testChainability();
   });
 
-  describe('::attachTo', function() {
+  describe('#attachTo', function() {
     beforeEach(function() {
       appendSetFixtures('<div id="test-attachTo"></div>');
       var attachToElement = $('#test-attachTo');
-      this.pwWidget.attachTo(attachToElement.get(0));
+      this.result = this.pwWidget.attachTo(attachToElement.get(0));
       this.container = attachToElement.children().get(0);
     });
 
     testAttachBehaviour();
+    testChainability();
   });
 
   describe.skip('::detach', function() {
