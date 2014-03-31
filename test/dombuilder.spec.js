@@ -45,7 +45,7 @@ describe('DOMBuilder', function() {
       expect(DOMBuilder.value(input_el)).to.be('test_value');
     });
 
-    it('returns textContent on non input elements', function() {
+    it('returns innerText/textContent on non input elements', function() {
       var div_el = document.createElement('div');
       div_el.innerHTML = '<b>test_value</b>';
 
