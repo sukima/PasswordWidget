@@ -7,6 +7,10 @@ describe('PasswordWidget', function() {
     this.pwWidget = new PasswordWidget(this.$pwNode.get(0));
   });
 
+  afterEach(function() {
+    mocha.getFixtures().cleanUp();
+  });
+
   describe('Constructor', function() {
     it('adds "pw-input" class to input element', function() {
       $expect(this.$pwNode).to.have['class']('pw-input');
