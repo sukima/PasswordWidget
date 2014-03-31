@@ -64,7 +64,17 @@ describe('PasswordWidget', function() {
     testChainability();
   });
 
-  describe.skip('::detach', function() {
+  describe('#detach', function() {
+    beforeEach(function() {
+      this.result = this.pwWidget.attach().detach();
+    });
+
+    it('removes an attached element from the DOM', function() {
+      expect(this.$pwNode.next().get(0))
+        .to.not.be(this.pwWidget.container().domElement);
+    });
+
+    testChainability();
   });
 
   describe('Events', function() {
@@ -98,9 +108,6 @@ describe('PasswordWidget', function() {
 
       sinon.assert.called(callback);
     });
-  });
-
-  describe.skip('Unobtrusive DOM manipulations', function() {
   });
 });
 /* vim:set ts=2 sw=2 et fdm=marker: */
