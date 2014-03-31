@@ -135,6 +135,18 @@ describe('DOMBuilder', function() {
     });
   });
 
+  describe('#remove', function() {
+    it('removes an element from the DOM', function() {
+      this.test_obj.remove();
+      $expect(this.test_wrapper.children()).to.have.items(0);
+    });
+
+
+    it('is chainable', function() {
+      expect(this.test_obj.remove()).to.be(this.test_obj);
+    });
+  });
+
   describe('#addClass', function() {
     it('adds a class to an element', function() {
       var el = this.test_element.get(0);
