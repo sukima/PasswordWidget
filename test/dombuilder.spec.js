@@ -141,6 +141,14 @@ describe('DOMBuilder', function() {
       $expect(this.test_wrapper.children()).to.have.items(0);
     });
 
+    it('is a noop when element is not in the DOM', function() {
+      function testNoopRemove() {
+        DOMBuilder(document.createElement('div')).remove();
+      }
+
+      expect(testNoopRemove).to.not.throwError();
+      $expect($('#mocha-fixtures').children()).to.have.items(1);
+    });
 
     it('is chainable', function() {
       expect(this.test_obj.remove()).to.be(this.test_obj);
