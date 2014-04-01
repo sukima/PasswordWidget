@@ -5,7 +5,14 @@ describe('PasswordWidget', function() {
   beforeEach(function() {
     setFixtures('<input id="test-input" type="password"/>');
     this.$pwNode = $('#test-input');
-    this.pwWidget = new PasswordWidget(this.$pwNode.get(0));
+    this.pwWidget = new PasswordWidget(this.$pwNode.get(0), {
+      showInfo:          false,
+      showMask:          false,
+      showGenerateLink:  false,
+      showStrength:      false,
+      showStrengthText:  false,
+      showBlinkenlights: false
+    });
   });
 
   afterEach(function() {
@@ -37,9 +44,9 @@ describe('PasswordWidget', function() {
   }
 
   function testAttachBehaviour() {
-    it('appends a container below the input element', function() {
-      $expect(this.container).to.have['class']('password-widget');
+    it('appends a wrapper with class "password-widget"', function() {
       $expect(this.container).to.have['class']('pw-wrapper');
+      $expect(this.container).to.have['class']('password-widget');
     });
   }
 
