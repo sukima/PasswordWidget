@@ -1,3 +1,4 @@
+var DomEvents = require('./support/domevents');
 var PasswordWidget = require('../lib/passwordwidget');
 
 describe('PasswordWidget', function() {
@@ -79,33 +80,9 @@ describe('PasswordWidget', function() {
 
   describe('Events', function() {
     it('emits a "update" event when input emits a "keyup" event', function() {
-      var evt;
       var callback = sinon.stub();
-      var node = this.$pwNode.get(0);
       this.pwWidget.on('update', callback);
-
-      // Have to use dispatchEvent/fireEvent because jQuery.trigger will not
-      // fire an event attached via addEventListener. Each environment has an
-      // unusual way to trigger a keyup event.
-      if (node.dispatchEvent) {
-        // Sane browsers
-        try {
-          // Chrome, Safari, Firefox
-          evt = new KeyboardEvent('keyup');
-        } catch (e) {
-          // PhantomJS (wat!)
-          evt = document.createEvent('KeyboardEvent');
-          evt.initEvent('keyup', true, false);
-        }
-        evt.keyCode = 32;
-        node.dispatchEvent(evt);
-      } else {
-        // IE 8
-        evt = document.createEventObject('KeyboardEvent');
-        evt.keyCode = 32;
-        node.fireEvent('onkeyup', evt);
-      }
-
+      DomEvents.dispatchKeyup(this.$pwNode.get(0));
       sinon.assert.called(callback);
     });
   });

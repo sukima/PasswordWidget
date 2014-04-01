@@ -1,27 +1,5 @@
+var DomEvents = require('./support/domevents');
 var DOMBuilder = require('../lib/dombuilder');
-
-var clickElement = function (node){
-  var evt;
-  if (node.dispatchEvent) {
-    // Everybody but IE8
-    evt = document.createEvent('MouseEvent');
-    evt.initMouseEvent(
-      'click',
-      true, /* bubble */
-      true, /* cancelable */
-      window, null,
-      0, 0, 0, 0, /* coordinates */
-      false, false, false, false, /* modifier keys */
-      0, /*left*/
-      null
-    );
-    node.dispatchEvent(evt);
-  } else {
-    // IE8
-    evt = document.createEventObject('MouseEvent');
-    node.fireEvent('onclick', evt);
-  }
-};
 
 describe('DOMBuilder', function() {
   beforeEach(function() {
@@ -175,7 +153,7 @@ describe('DOMBuilder', function() {
     it('attaches a function to an event', function() {
       var callback = sinon.stub();
       this.test_obj.proxyEvent('click', callback);
-      clickElement(this.test_element.get(0));
+      DomEvents.dispatchClick(this.test_element.get(0));
       sinon.assert.called(callback);
     });
 
