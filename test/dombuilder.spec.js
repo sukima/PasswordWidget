@@ -199,18 +199,33 @@ describe('DOMBuilder', function() {
     });
   });
 
-  describe('#wrapper', function() {
-    beforeEach(function() {
-      this.test_wrapper = DOMBuilder.wrapper();
+  describe('DOM Builders', function() {
+
+    function testClasses(/* classes */) {
+      var classes = Array.prototype.slice.call(arguments, 0);
+
+      classes.forEach(function(expectedClass) {
+        it('has "' + expectedClass + '" class', function() {
+          $expect(this.test_builder.domElement).to.have['class'](expectedClass);
+        });
+      });
+    }
+
+    function testCommonBuilderSpecs() {
+      it('returns a DOMBuilder', function() {
+        expect(this.test_builder).to.be.a(DOMBuilder);
+      });
+    }
+
+    describe('#wrapper', function() {
+      beforeEach(function() {
+        this.test_builder = DOMBuilder.wrapper();
+      });
+
+      testCommonBuilderSpecs();
+      testClasses('pw-wrapper');
     });
 
-    it('returns a DOMBuilder', function() {
-      expect(this.test_wrapper).to.be.a(DOMBuilder);
-    });
-
-    it('adds a "pw-wrapper" class', function() {
-      $expect(this.test_wrapper.domElement).to.have['class']('pw-wrapper');
-    });
   });
 
 });
