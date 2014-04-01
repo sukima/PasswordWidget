@@ -226,6 +226,25 @@ describe('DOMBuilder', function() {
       testClasses('pw-wrapper');
     });
 
+    describe('#button', function() {
+      beforeEach(function() {
+        this.test_builder = DOMBuilder.button('test-text');
+      });
+
+      describe('returned element', function() {
+        it('is a link', function() {
+          $expect(this.test_builder.domElement).to.be.an('a');
+        });
+
+        it('has an href of "#"', function() {
+          expect(this.test_builder.domElement.href).to.match(/#$/);
+        });
+
+        testClasses('pw-button');
+      });
+
+      testCommonBuilderSpecs();
+    });
   });
 
 });
