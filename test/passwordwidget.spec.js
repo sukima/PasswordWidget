@@ -1,4 +1,5 @@
 var DomEvents = require('./support/domevents');
+var DOMBuilder = require('../lib/dombuilder');
 var PasswordWidget = require('../lib/passwordwidget');
 
 describe('PasswordWidget', function() {
@@ -93,5 +94,66 @@ describe('PasswordWidget', function() {
       sinon.assert.called(callback);
     });
   });
+
+  describe('UI Components', function() {
+
+    describe('#infoButton', function() {
+      var sandbox = sinon.sandbox.create();
+      var mockEvent = {
+        preventDefault: function() { }
+      };
+
+      beforeEach(function() {
+        this.showAlertStub = sandbox.stub(DOMBuilder, 'showAlert');
+        this.proxyEventSpy = sandbox.spy(DOMBuilder.prototype, 'proxyEvent');
+        this.infoButton = this.pwWidget.infoButton();
+        this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
+        this.actionCallback = sandbox.spy();
+        this.pwWidget.on('action', this.actionCallback);
+      });
+
+      afterEach(function() {
+        sandbox.restore();
+      });
+
+      function testActionCallback() {
+        it('fires "action" event with {target: "pw-info"}', function() {
+          sinon.assert.calledWith(this.actionCallback, sinon.match({target: 'pw-info'}));
+        });
+      }
+
+      describe('without attached "showInfo" event listener', function() {
+        beforeEach(function() {
+          this.triggerEvent.call(null, mockEvent);
+        });
+
+        it('displays an alert', function() {
+          sinon.assert.called(this.showAlertStub);
+        });
+
+        testActionCallback();
+      });
+
+      describe('with attached "showInfo" event listener', function() {
+        beforeEach(function() {
+          this.showInfoCallback = sandbox.spy();
+          this.pwWidget.on('showInfo', this.showInfoCallback);
+          this.triggerEvent.call(null, mockEvent);
+        });
+
+        it('does not display an alert', function() {
+          sinon.assert.notCalled(this.showAlertStub);
+        });
+
+        it('fires a "showInfo" event', function() {
+          sinon.assert.calledWith(this.showInfoCallback, sinon.match({content: sinon.match.string}));
+        });
+
+        testActionCallback();
+      });
+    });
+
+  });
+
 });
 /* vim:set ts=2 sw=2 et fdm=marker: */
