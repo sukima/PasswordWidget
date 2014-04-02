@@ -155,6 +155,42 @@ describe('PasswordWidget', function() {
       });
     });
 
+    describe('#showHideButton', function() {
+      beforeEach(function() {
+        this.showHideButton = this.pwWidget.showHideButton();
+        this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
+        this.actionCallback = sandbox.spy();
+        this.pwWidget.on('action', this.actionCallback);
+        this.pwWidget.isMasked = true;
+      });
+
+      it('fires "action" event with {type: "pw-show-mask"}', function() {
+        this.triggerEvent.call(null, mockEvent);
+        sinon.assert.calledWith(this.actionCallback, sinon.match({type: 'pw-show-mask'}));
+      });
+
+      it('toggles isMasked state', function() {
+        this.triggerEvent.call(null, mockEvent);
+        expect(this.pwWidget.isMasked).to.be(false);
+
+        this.triggerEvent.call(null, mockEvent);
+        expect(this.pwWidget.isMasked).to.be(true);
+      });
+
+      it('toggles button state', function() {
+        var $element    = $('a', this.showHideButton.domElement);
+        var origContent = $element.text();
+        var origTitle   = $element.attr('title');
+
+        this.triggerEvent.call(null, mockEvent);
+        $expect($element).to.not.contain(origContent);
+        $expect($element).to.not.have.attr('title', origTitle);
+
+        this.triggerEvent.call(null, mockEvent);
+        $expect($element).to.contain(origContent);
+        $expect($element).to.have.attr('title', origTitle);
+      });
+    });
   });
 
 });
