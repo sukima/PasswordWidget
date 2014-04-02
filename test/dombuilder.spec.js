@@ -177,6 +177,22 @@ describe('DOMBuilder', function() {
     });
   });
 
+  describe('#showAlert', function() {
+    beforeEach(function() {
+      this.origAlert = window.alert;
+      window.alert = sinon.spy();
+    });
+
+    afterEach(function() {
+      window.alert = this.origAlert;
+    });
+
+    it('shows an alert', function() {
+      DOMBuilder.showAlert('test-message');
+      sinon.assert.calledWith(window.alert, 'test-message');
+    });
+  });
+
   describe('DOM Builders', function() {
 
     function testClasses(/* classes */) {
