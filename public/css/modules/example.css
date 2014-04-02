@@ -1,0 +1,8 @@
+.example {
+  text-align:    left;
+  width:         330px;
+  border-top:    1px solid #000;
+  border-bottom: 1px solid #000;
+  padding:       10px;
+  margin:        0 auto;
+}

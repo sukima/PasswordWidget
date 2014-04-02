@@ -1,0 +1,12 @@
+body {
+  background-color: #e1e1e1;
+
+  /**
+   * ========================================================
+   * This pattern is downloaded from www.subtlepatterns.com
+   * If you need more, that's where to get'em.
+   * ========================================================
+   * CC BY-SA 3.0 - Subtle Patterns © Atle Mo.
+   */
+  background-image: url(../images/brickwall.png);
+}
