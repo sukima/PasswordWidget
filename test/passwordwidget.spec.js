@@ -96,24 +96,26 @@ describe('PasswordWidget', function() {
   });
 
   describe('UI Components', function() {
+    var sandbox = sinon.sandbox.create();
+    var mockEvent = {
+      preventDefault: function() { }
+    };
+
+    beforeEach(function() {
+      this.proxyEventSpy = sandbox.spy(DOMBuilder.prototype, 'proxyEvent');
+      this.actionCallback = sandbox.spy();
+      this.pwWidget.on('action', this.actionCallback);
+    });
+
+    afterEach(function() {
+      sandbox.restore();
+    });
 
     describe('#infoButton', function() {
-      var sandbox = sinon.sandbox.create();
-      var mockEvent = {
-        preventDefault: function() { }
-      };
-
       beforeEach(function() {
         this.showAlertStub = sandbox.stub(DOMBuilder, 'showAlert');
-        this.proxyEventSpy = sandbox.spy(DOMBuilder.prototype, 'proxyEvent');
         this.infoButton = this.pwWidget.infoButton();
         this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
-        this.actionCallback = sandbox.spy();
-        this.pwWidget.on('action', this.actionCallback);
-      });
-
-      afterEach(function() {
-        sandbox.restore();
       });
 
       function testActionCallback() {
