@@ -234,6 +234,15 @@ describe('DOMBuilder', function() {
           expect(this.test_builder.domElement.href).to.match(/#$/);
         });
 
+        it('assigns an optional title', function() {
+          // With arguments
+          var button = DOMBuilder.button('test-text', 'test-title1');
+          expect(button.domElement.title).to.be('test-title1');
+          // With an array
+          button = DOMBuilder.button(['test-text', 'test-title2']);
+          expect(button.domElement.title).to.be('test-title2');
+        });
+
         testClasses('pw-button');
       });
 
