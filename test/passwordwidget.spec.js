@@ -119,8 +119,8 @@ describe('PasswordWidget', function() {
       });
 
       function testActionCallback() {
-        it('fires "action" event with {target: "pw-info"}', function() {
-          sinon.assert.calledWith(this.actionCallback, sinon.match({target: 'pw-info'}));
+        it('fires "action" event with {type: "pw-info"}', function() {
+          sinon.assert.calledWith(this.actionCallback, sinon.match({type: 'pw-info'}));
         });
       }
 
