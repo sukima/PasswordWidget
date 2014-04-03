@@ -8,7 +8,7 @@
     "test/support/fixtures.js",
     "node_modules/sinon/pkg/sinon.js",
     "node_modules/es5-shim/es5-shim.js",
-    "build/specs.js"
+    "dist/specs.js"
   ],
   "src_files": [
     "lib/**/*.js",

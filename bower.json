@@ -1,0 +1,22 @@
+{
+  "name": "PasswordWidgetExample",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Example if using PasswordWidget JavaScript plugin",
+  "homepage": "https://github.com/sukima/PasswordWidget",
+  "authors": [
+    "Devin Weaver <suki@tritarget.org>"
+  ],
+  "main": "dist/passwordwidget.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.1.1"
+  }
+}

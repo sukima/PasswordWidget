@@ -7,6 +7,7 @@ var uglify      = require('gulp-uglify');
 var clean       = require('gulp-clean');
 var header      = require('gulp-header');
 var concat      = require('gulp-concat');
+var bower       = require('gulp-bower');
 var pkg         = require('./package.json');
 
 function es5_shim() {
@@ -18,7 +19,7 @@ function es5_shim() {
 var config = {
   name:     'PasswordWidget',
   destName: 'passwordwidget.js',
-  destDir:  'build',
+  destDir:  'dist',
   header:   'lib/header.ejs',
   scripts:  'lib/passwordwidget.js',
   specs:    'test/specs.js'
@@ -46,6 +47,11 @@ gulp.task('main', function() {
     .pipe(gutil.env.production ? uglify() : gutil.noop())
     .pipe(header(preamble, pkg))
     .pipe(gulp.dest(config.destDir));
+
+  gutil.log('Saved ' + gutil.colors.blue(config.name) +
+    (gutil.env.shim ? ' (with es5-shim)' : '') +
+    (gutil.env.production ? ' (minified)' : ' (debug)') +
+    ' to ' + gutil.colors.magenta(config.destDir +'/'+ config.destName));
 });
 
 gulp.task('specs', function() {
@@ -56,6 +62,13 @@ gulp.task('specs', function() {
       debug:            true
     }))
     .pipe(gulp.dest(config.destDir));
+
+  gutil.log('Saved specs to ' +
+    gutil.colors.magenta(config.destDir +'/specs.js'));
+});
+
+gulp.task('bower', function() {
+  bower();
 });
 
 gulp.task('clean', function() {
@@ -63,10 +76,5 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
-gulp.task('default', ['main', 'specs'], function() {
-  gutil.log('Saved ' + gutil.colors.blue(config.name) +
-    (gutil.env.shim ? ' (with es5-shim)' : '') +
-    (gutil.env.production ? ' (minified)' : ' (debug)') +
-    ' to ' + gutil.colors.magenta(config.destDir +'/'+ config.destName));
-});
+gulp.task('default', ['main', 'specs', 'bower']);
 /* vim:set ts=2 sw=2 et fdm=marker: */
