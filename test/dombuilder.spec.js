@@ -149,6 +149,30 @@ describe('DOMBuilder', function() {
     });
   });
 
+  describe('#setTest', function() {
+    it('sets the innerHTML', function() {
+      // With arguments
+      this.test_obj.setText('test-text1');
+      $expect(this.test_obj.domElement).to.have.text('test-text1');
+      // With an array
+      this.test_obj.setText(['test-text2']);
+      $expect(this.test_obj.domElement).to.have.text('test-text2');
+    });
+
+    it('assigns an optional title', function() {
+      // With arguments
+      this.test_obj.setText('test-text1', 'test-title1');
+      $expect(this.test_obj.domElement).to.have.attr('title', 'test-title1');
+      // With an array
+      this.test_obj.setText(['test-text2', 'test-title2']);
+      $expect(this.test_obj.domElement).to.have.attr('title', 'test-title2');
+    });
+
+    it('is chainable', function() {
+      expect(this.test_obj.setText('foo')).to.be(this.test_obj);
+    });
+  });
+
   describe('#proxyEvent', function() {
     it('attaches a function to an event', function() {
       var callback = sinon.stub();
@@ -222,7 +246,7 @@ describe('DOMBuilder', function() {
 
     describe('#button', function() {
       beforeEach(function() {
-        this.test_builder = DOMBuilder.button('test-text');
+        this.test_builder = DOMBuilder.button();
       });
 
       describe('returned element', function() {
@@ -232,15 +256,6 @@ describe('DOMBuilder', function() {
 
         it('has an href of "#"', function() {
           expect(this.test_builder.domElement.href).to.match(/#$/);
-        });
-
-        it('assigns an optional title', function() {
-          // With arguments
-          var button = DOMBuilder.button('test-text', 'test-title1');
-          expect(button.domElement.title).to.be('test-title1');
-          // With an array
-          button = DOMBuilder.button(['test-text', 'test-title2']);
-          expect(button.domElement.title).to.be('test-title2');
         });
 
         testClasses('pw-button');
