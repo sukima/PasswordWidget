@@ -104,7 +104,6 @@ describe('PasswordWidget', function() {
     beforeEach(function() {
       this.proxyEventSpy = sandbox.spy(DOMBuilder.prototype, 'proxyEvent');
       this.actionCallback = sandbox.spy();
-      this.pwWidget.on('action', this.actionCallback);
     });
 
     afterEach(function() {
@@ -118,12 +117,6 @@ describe('PasswordWidget', function() {
         this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
       });
 
-      function testActionCallback() {
-        it('fires "action" event with {type: "pw-info"}', function() {
-          sinon.assert.calledWith(this.actionCallback, sinon.match({type: 'pw-info'}));
-        });
-      }
-
       describe('without attached "showInfo" event listener', function() {
         beforeEach(function() {
           this.triggerEvent.call(null, mockEvent);
@@ -132,8 +125,6 @@ describe('PasswordWidget', function() {
         it('displays an alert', function() {
           sinon.assert.called(this.showAlertStub);
         });
-
-        testActionCallback();
       });
 
       describe('with attached "showInfo" event listener', function() {
@@ -147,11 +138,9 @@ describe('PasswordWidget', function() {
           sinon.assert.notCalled(this.showAlertStub);
         });
 
-        it('fires a "showInfo" event', function() {
-          sinon.assert.calledWith(this.showInfoCallback, sinon.match({content: sinon.match.string}));
+        it('fires a "showInfo" event with {infoText: string}', function() {
+          sinon.assert.calledWith(this.showInfoCallback, sinon.match({infoText: sinon.match.string}));
         });
-
-        testActionCallback();
       });
     });
 
@@ -160,13 +149,13 @@ describe('PasswordWidget', function() {
         this.showHideButton = this.pwWidget.showHideButton();
         this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
         this.actionCallback = sandbox.spy();
-        this.pwWidget.on('action', this.actionCallback);
+        this.pwWidget.on('showHidePassword', this.actionCallback);
         this.pwWidget.isMasked = true;
       });
 
-      it('fires "action" event with {type: "pw-show-mask"}', function() {
+      it('fires "showHidePassword" event with {isMasked: boolean}', function() {
         this.triggerEvent.call(null, mockEvent);
-        sinon.assert.calledWith(this.actionCallback, sinon.match({type: 'pw-show-mask'}));
+        sinon.assert.calledWith(this.actionCallback, sinon.match({isMasked: sinon.match.bool}));
       });
 
       it('toggles isMasked state', function() {
