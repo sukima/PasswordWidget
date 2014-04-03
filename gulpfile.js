@@ -8,6 +8,7 @@ var clean       = require('gulp-clean');
 var header      = require('gulp-header');
 var concat      = require('gulp-concat');
 var bower       = require('gulp-bower');
+var serve       = require('gulp-serve');
 var pkg         = require('./package.json');
 
 function es5_shim() {
@@ -68,8 +69,14 @@ gulp.task('specs', function() {
 });
 
 gulp.task('bower', function() {
-  bower();
+  bower('public/bower_components/');
 });
+
+gulp.task('serve', ['bower', 'main'], serve([
+  config.destDir,
+  'public',
+  'commonPasswords.json'
+]));
 
 gulp.task('clean', function() {
   gulp.src(config.destDir, {read: false})
