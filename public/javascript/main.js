@@ -3,7 +3,7 @@
 
   function showInfoPopup(e) {
     var dialog = $('#password-widget-info-dialog');
-    $('.modal-body', dialog).html(e.content);
+    $('.modal-body', dialog).html(e.infoText);
     dialog.modal('show');
   }
 
