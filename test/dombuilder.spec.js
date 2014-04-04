@@ -149,7 +149,7 @@ describe('DOMBuilder', function() {
     });
   });
 
-  describe('#setTest', function() {
+  describe('#setText', function() {
     it('sets the innerHTML', function() {
       // With arguments
       this.test_obj.setText('test-text1');
@@ -170,6 +170,17 @@ describe('DOMBuilder', function() {
 
     it('is chainable', function() {
       expect(this.test_obj.setText('foo')).to.be(this.test_obj);
+    });
+  });
+
+  describe('#setAttr', function() {
+    it('sets an attribute on the element', function() {
+      this.test_obj.setAttr('title', 'test-attr');
+      $expect(this.test_obj.domElement).to.have.attr('title', 'test-attr');
+    });
+
+    it('is chainable', function() {
+      expect(this.test_obj.setAttr('title', 'foobar')).to.be(this.test_obj);
     });
   });
 
