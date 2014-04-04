@@ -95,6 +95,20 @@ describe('PasswordWidget', function() {
     });
   });
 
+  describe('#updateIndicators', function() {
+    beforeEach(function() {
+      this.callback = sinon.stub();
+      this.pwWidget.on('update', this.callback);
+      this.result = this.pwWidget.updateIndicators();
+    });
+
+    it('emits an "update" event', function() {
+      sinon.assert.called(this.callback);
+    });
+
+    testChainability();
+  });
+
   describe('UI Components', function() {
     var sandbox = sinon.sandbox.create();
     var mockEvent = {
