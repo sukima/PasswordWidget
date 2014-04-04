@@ -254,10 +254,6 @@ describe('DOMBuilder', function() {
           $expect(this.test_builder.domElement).to.be.an('a');
         });
 
-        it('has an href of "#"', function() {
-          expect(this.test_builder.domElement.href).to.match(/#$/);
-        });
-
         testClasses('pw-button');
       });
 
