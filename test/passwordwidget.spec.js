@@ -107,6 +107,17 @@ describe('PasswordWidget', function() {
         sinon.assert.calledWith(setMaskStub);
       }));
     });
+
+    describe('click on info button', function() {
+      it('calls #showInfo', sinon.test(function() {
+        var showInfoStub = this.stub(PasswordWidget.prototype, 'showInfo');
+        var test_obj     = new PasswordWidget(document.createElement('input'));
+        var infoButton   = test_obj.infoButton();
+        var $element     = $('a', infoButton.domElement);
+        DomEvents.dispatchClick($element.get(0));
+        sinon.assert.calledWith(showInfoStub);
+      }));
+    });
   });
 
   describe('#updateIndicators', function() {
