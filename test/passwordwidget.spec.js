@@ -245,6 +245,18 @@ describe('PasswordWidget', function() {
           .to.have['class']('pw-button');
       });
     });
+
+    describe('#infoButton', function() {
+      beforeEach(function() {
+        this.infoButton = this.pwWidget.infoButton();
+      });
+
+      it('has the classes "pw-info pw-button"', function() {
+        $expect(this.infoButton.domElement)
+          .to.have['class']('pw-info');
+        $expect(this.infoButton.domElement)
+          .to.have['class']('pw-button');
+      });
     });
   });
 
