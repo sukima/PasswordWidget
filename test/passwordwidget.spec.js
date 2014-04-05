@@ -237,6 +237,14 @@ describe('PasswordWidget', function() {
         $expect($element).to.contain(origContent);
         $expect($element).to.have.attr('title', origTitle);
       });
+
+      it('has the classes "pw-show-mask pw-button"', function() {
+        $expect(this.showHideButton.domElement)
+          .to.have['class']('pw-show-mask');
+        $expect(this.showHideButton.domElement)
+          .to.have['class']('pw-button');
+      });
+    });
     });
   });
 
