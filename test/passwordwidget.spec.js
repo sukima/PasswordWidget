@@ -86,12 +86,16 @@ describe('PasswordWidget', function() {
     testChainability();
   });
 
-  describe('Events', function() {
-    it('emits a "update" event when input emits a "keyup" event', function() {
-      var callback = sinon.stub();
-      this.pwWidget.on('update', callback);
-      DomEvents.dispatchKeyup(this.$pwNode.get(0));
-      sinon.assert.called(callback);
+  describe('Event listeners', function() {
+    describe('click on show/hide button', function() {
+      it('calls #setMask', sinon.test(function() {
+        var setMaskStub    = this.stub(PasswordWidget.prototype, 'setMask');
+        var test_obj       = new PasswordWidget(document.createElement('input'));
+        var showHideButton = test_obj.showHideButton();
+        var $element       = $('a', showHideButton.domElement);
+        DomEvents.dispatchClick($element.get(0));
+        sinon.assert.calledWith(setMaskStub);
+      }));
     });
   });
 
@@ -104,6 +108,28 @@ describe('PasswordWidget', function() {
 
     it('emits an "update" event', function() {
       sinon.assert.called(this.callback);
+    });
+
+    testChainability();
+  });
+
+  describe('#setMask', function() {
+    beforeEach(function() {
+      this.callback = sinon.stub();
+      this.pwWidget.on('showHidePassword', this.callback);
+      this.result = this.pwWidget.setMask();
+    });
+
+    it('sets input type ("password"/"text")', sinon.test(function() {
+      var setAttrStub = this.stub(DOMBuilder.prototype, 'setAttr');
+      this.pwWidget.setMask(true);
+      sinon.assert.calledWith(setAttrStub, 'type', 'password');
+      this.pwWidget.setMask(false);
+      sinon.assert.calledWith(setAttrStub, 'type', 'text');
+    }));
+
+    it('emits an "showHidePassword" event with {isMasked: boolean}', function() {
+      sinon.assert.calledWith(this.callback, sinon.match({isMasked: sinon.match.bool}));
     });
 
     testChainability();
