@@ -87,6 +87,16 @@ describe('PasswordWidget', function() {
   });
 
   describe('Event listeners', function() {
+    describe('keyup on input element', function() {
+      it('calls #updateIndicators', sinon.test(function() {
+        var node = document.createElement('input');
+        var updateIndicatorsStub = this.stub(PasswordWidget.prototype, 'updateIndicators');
+        var test_obj = new PasswordWidget(node);
+        DomEvents.dispatchKeyup(node);
+        sinon.assert.called(updateIndicatorsStub);
+      }));
+    });
+
     describe('click on show/hide button', function() {
       it('calls #setMask', sinon.test(function() {
         var setMaskStub    = this.stub(PasswordWidget.prototype, 'setMask');
@@ -97,6 +107,20 @@ describe('PasswordWidget', function() {
         sinon.assert.calledWith(setMaskStub);
       }));
     });
+  });
+
+  describe('#updateIndicators', function() {
+    beforeEach(function() {
+      this.callback = sinon.stub();
+      this.pwWidget.on('update', this.callback);
+      this.result = this.pwWidget.updateIndicators();
+    });
+
+    it('emits an "update" event', function() {
+      sinon.assert.called(this.callback);
+    });
+
+    testChainability();
   });
 
   describe('#updateIndicators', function() {
