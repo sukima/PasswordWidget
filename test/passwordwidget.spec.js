@@ -123,20 +123,6 @@ describe('PasswordWidget', function() {
     testChainability();
   });
 
-  describe('#updateIndicators', function() {
-    beforeEach(function() {
-      this.callback = sinon.stub();
-      this.pwWidget.on('update', this.callback);
-      this.result = this.pwWidget.updateIndicators();
-    });
-
-    it('emits an "update" event', function() {
-      sinon.assert.called(this.callback);
-    });
-
-    testChainability();
-  });
-
   describe('#setMask', function() {
     beforeEach(function() {
       this.callback = sinon.stub();
@@ -159,6 +145,44 @@ describe('PasswordWidget', function() {
     testChainability();
   });
 
+  describe('#showInfo', function() {
+    var sandbox = sinon.sandbox.create();
+
+    beforeEach(function() {
+      this.showAlertStub = sandbox.stub(DOMBuilder, 'showAlert');
+      this.result = this.pwWidget.showInfo();
+    });
+
+    afterEach(function() {
+      sandbox.restore();
+    });
+
+    testChainability();
+
+    describe('without attached "showInfo" event listener', function() {
+      it('displays an alert', function() {
+        sinon.assert.called(this.showAlertStub);
+      });
+    });
+
+    describe('with attached "showInfo" event listener', function() {
+      beforeEach(function() {
+        this.showAlertStub.reset();
+        this.showInfoCallback = sandbox.spy();
+        this.pwWidget.on('showInfo', this.showInfoCallback);
+        this.pwWidget.showInfo();
+      });
+
+      it('does not display an alert', function() {
+        sinon.assert.notCalled(this.showAlertStub);
+      });
+
+      it('fires a "showInfo" event with {infoText: string}', function() {
+        sinon.assert.calledWith(this.showInfoCallback, sinon.match({infoText: sinon.match.string}));
+      });
+    });
+  });
+
   describe('UI Components', function() {
     var sandbox = sinon.sandbox.create();
     var mockEvent = {
@@ -174,52 +198,11 @@ describe('PasswordWidget', function() {
       sandbox.restore();
     });
 
-    describe('#infoButton', function() {
-      beforeEach(function() {
-        this.showAlertStub = sandbox.stub(DOMBuilder, 'showAlert');
-        this.infoButton = this.pwWidget.infoButton();
-        this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
-      });
-
-      describe('without attached "showInfo" event listener', function() {
-        beforeEach(function() {
-          this.triggerEvent.call(null, mockEvent);
-        });
-
-        it('displays an alert', function() {
-          sinon.assert.called(this.showAlertStub);
-        });
-      });
-
-      describe('with attached "showInfo" event listener', function() {
-        beforeEach(function() {
-          this.showInfoCallback = sandbox.spy();
-          this.pwWidget.on('showInfo', this.showInfoCallback);
-          this.triggerEvent.call(null, mockEvent);
-        });
-
-        it('does not display an alert', function() {
-          sinon.assert.notCalled(this.showAlertStub);
-        });
-
-        it('fires a "showInfo" event with {infoText: string}', function() {
-          sinon.assert.calledWith(this.showInfoCallback, sinon.match({infoText: sinon.match.string}));
-        });
-      });
-    });
-
     describe('#showHideButton', function() {
       beforeEach(function() {
         this.showHideButton = this.pwWidget.showHideButton();
         this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
-        this.actionCallback = sandbox.spy();
-        this.pwWidget.on('showHidePassword', this.actionCallback);
         this.pwWidget.isMasked = true;
-      });
-
-      it('fires "showHidePassword" event with {isMasked: boolean}', function() {
-        this.triggerEvent.call(null, mockEvent);
-        sinon.assert.calledWith(this.actionCallback, sinon.match({isMasked: sinon.match.bool}));
       });
 
       it('toggles isMasked state', function() {
