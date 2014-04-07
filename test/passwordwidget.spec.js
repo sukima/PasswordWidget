@@ -89,10 +89,9 @@ describe('PasswordWidget', function() {
   describe('Event listeners', function() {
     describe('keyup on input element', function() {
       it('calls #updateIndicators', sinon.test(function() {
-        var node = document.createElement('input');
-        node.value = '';
+        var node                 = this.$pwNode.get(0);
         var updateIndicatorsStub = this.stub(PasswordWidget.prototype, 'updateIndicators');
-        var test_obj = new PasswordWidget(node);
+        var test_obj             = new PasswordWidget(node);
         DomEvents.dispatchKeyup(node);
         sinon.assert.called(updateIndicatorsStub);
       }));
@@ -100,8 +99,7 @@ describe('PasswordWidget', function() {
 
     describe('click on show/hide button', function() {
       it('calls #setMask', sinon.test(function() {
-        var node           = document.createElement('input');
-        node.value = '';
+        var node           = this.$pwNode.get(0);
         var setMaskStub    = this.stub(PasswordWidget.prototype, 'setMask');
         var test_obj       = new PasswordWidget(node);
         var showHideButton = test_obj.showHideButton();
@@ -113,8 +111,7 @@ describe('PasswordWidget', function() {
 
     describe('click on info button', function() {
       it('calls #showInfo', sinon.test(function() {
-        var node           = document.createElement('input');
-        node.value = '';
+        var node         = this.$pwNode.get(0);
         var showInfoStub = this.stub(PasswordWidget.prototype, 'showInfo');
         var test_obj     = new PasswordWidget(node);
         var infoButton   = test_obj.infoButton();
@@ -221,9 +218,10 @@ describe('PasswordWidget', function() {
 
     describe('#showHideButton', function() {
       beforeEach(function() {
-        this.showHideButton = this.pwWidget.showHideButton();
-        this.triggerEvent = this.proxyEventSpy.getCall(0).args[1];
         this.pwWidget.isMasked = true;
+        this.setMaskStub       = sandbox.stub(PasswordWidget.prototype, 'setMask');
+        this.showHideButton    = this.pwWidget.showHideButton();
+        this.triggerEvent      = this.proxyEventSpy.getCall(0).args[1];
       });
 
       it('toggles isMasked state', function() {
@@ -253,6 +251,11 @@ describe('PasswordWidget', function() {
           .to.have['class']('pw-show-mask');
         $expect(this.showHideButton.domElement)
           .to.have['class']('pw-button');
+      });
+
+      it('calls #setMask', function() {
+        this.triggerEvent.call(null, mockEvent);
+        sinon.assert.called(this.setMaskStub);
       });
     });
 
