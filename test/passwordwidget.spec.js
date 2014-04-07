@@ -46,8 +46,9 @@ describe('PasswordWidget', function() {
 
   function testAttachBehaviour() {
     it('appends a wrapper with class "password-widget"', function() {
-      $expect(this.container).to.have['class']('pw-wrapper');
-      $expect(this.container).to.have['class']('password-widget');
+      $expect(this.container)
+        .to.have['class']('pw-wrapper')
+        .and.to.have['class']('password-widget');
     });
   }
 
@@ -64,9 +65,9 @@ describe('PasswordWidget', function() {
   describe('#attachTo', function() {
     beforeEach(function() {
       appendSetFixtures('<div id="test-attachTo"></div>');
-      var attachToElement = $('#test-attachTo');
-      this.result = this.pwWidget.attachTo(attachToElement.get(0));
-      this.container = attachToElement.children().get(0);
+      var $attachToElement = $('#test-attachTo');
+      this.result = this.pwWidget.attachTo($attachToElement.get(0));
+      this.container = $attachToElement.next();
     });
 
     testAttachBehaviour();
@@ -271,19 +272,20 @@ describe('PasswordWidget', function() {
         var origTitle   = $element.attr('title');
 
         this.triggerEvent.call(null, mockEvent);
-        $expect($element).to.not.contain(origContent);
-        $expect($element).to.not.have.attr('title', origTitle);
+        $expect($element)
+          .to.not.have.attr('title', origTitle)
+          .and.to.not.contain(origContent);
 
         this.triggerEvent.call(null, mockEvent);
-        $expect($element).to.contain(origContent);
-        $expect($element).to.have.attr('title', origTitle);
+        $expect($element)
+          .to.have.attr('title', origTitle)
+          .and.to.contain(origContent);
       });
 
       it('has the classes "pw-show-mask pw-button"', function() {
         $expect(this.showHideButton.domElement)
-          .to.have['class']('pw-show-mask');
-        $expect(this.showHideButton.domElement)
-          .to.have['class']('pw-button');
+          .to.have['class']('pw-show-mask')
+          .and.to.have['class']('pw-button');
       });
 
       it('calls #setMask', function() {
@@ -299,9 +301,8 @@ describe('PasswordWidget', function() {
 
       it('has the classes "pw-info pw-button"', function() {
         $expect(this.infoButton.domElement)
-          .to.have['class']('pw-info');
-        $expect(this.infoButton.domElement)
-          .to.have['class']('pw-button');
+          .to.have['class']('pw-info')
+          .and.to.have['class']('pw-button');
       });
     });
 
