@@ -120,6 +120,18 @@ describe('PasswordWidget', function() {
         sinon.assert.calledWith(showInfoStub);
       }));
     });
+
+    describe('click on generate button', function() {
+      it('calls #generate', sinon.test(function() {
+        var node           = this.$pwNode.get(0);
+        var generateStub   = this.stub(PasswordWidget.prototype, 'generate');
+        var test_obj       = new PasswordWidget(node);
+        var generateButton = test_obj.generateButton();
+        var $element       = $('a', generateButton.domElement);
+        DomEvents.dispatchClick($element.get(0));
+        sinon.assert.calledWith(generateStub);
+      }));
+    });
   });
 
   describe('#updateIndicators', function() {
@@ -201,6 +213,27 @@ describe('PasswordWidget', function() {
     });
   });
 
+  describe('#generate', function() {
+    beforeEach(function() {
+      this.callback = sinon.stub();
+      this.pwWidget.on('generatePassword', this.callback);
+      this.$pwNode.val('foobar');
+      this.result = this.pwWidget.generate();
+    });
+
+    it('fires a "generatePassword" event with {password: string}', function() {
+      sinon.assert.calledWith(this.callback, sinon.match({password: sinon.match.string}));
+    });
+
+    it('changes the input element\'s value', function() {
+      $expect(this.$pwNode)
+        .to.not.have.value('')
+        .and.not.have.value('foobar');
+    });
+
+    testChainability();
+  });
+
   describe('UI Components', function() {
     var sandbox = sinon.sandbox.create();
     var mockEvent = {
@@ -269,6 +302,18 @@ describe('PasswordWidget', function() {
           .to.have['class']('pw-info');
         $expect(this.infoButton.domElement)
           .to.have['class']('pw-button');
+      });
+    });
+
+    describe('#generateButton', function() {
+      beforeEach(function() {
+        this.generateButton = this.pwWidget.generateButton();
+      });
+
+      it('has the classes "pw-generate pw-button"', function() {
+        $expect(this.generateButton.domElement)
+          .to.have['class']('pw-generate')
+          .and.to.have['class']('pw-button');
       });
     });
   });
