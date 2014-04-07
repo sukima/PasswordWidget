@@ -751,6 +751,7 @@
         (got = this.obj.val()) === val
       , msg || 'expected ' + i(this.obj) + ' to have value ' + val + ' but got ' + got
       , msg || 'expected ' + i(this.obj) + ' not to have value ' + val);
+    return this;
   };
 
   /**
@@ -766,6 +767,7 @@
         (got = this.obj.html()) === html
       , msg || 'expected ' + i(this.obj) + ' to have HTML ' + html + ' but got ' + got
       , msg || 'expected ' + i(this.obj) + ' not to have HTML ' + html);
+    return this;
   };
 
   /**
