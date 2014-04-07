@@ -4,7 +4,7 @@ var PasswordWidget = require('../lib/passwordwidget');
 
 describe('PasswordWidget', function() {
   beforeEach(function() {
-    setFixtures('<input id="test-input" type="password"/>');
+    setFixtures('<input id="test-input" type="password" value="" />');
     this.$pwNode = $('#test-input');
     this.pwWidget = new PasswordWidget(this.$pwNode.get(0), {
       showInfo:          false,
@@ -90,6 +90,7 @@ describe('PasswordWidget', function() {
     describe('keyup on input element', function() {
       it('calls #updateIndicators', sinon.test(function() {
         var node = document.createElement('input');
+        node.value = '';
         var updateIndicatorsStub = this.stub(PasswordWidget.prototype, 'updateIndicators');
         var test_obj = new PasswordWidget(node);
         DomEvents.dispatchKeyup(node);
@@ -99,8 +100,10 @@ describe('PasswordWidget', function() {
 
     describe('click on show/hide button', function() {
       it('calls #setMask', sinon.test(function() {
+        var node           = document.createElement('input');
+        node.value = '';
         var setMaskStub    = this.stub(PasswordWidget.prototype, 'setMask');
-        var test_obj       = new PasswordWidget(document.createElement('input'));
+        var test_obj       = new PasswordWidget(node);
         var showHideButton = test_obj.showHideButton();
         var $element       = $('a', showHideButton.domElement);
         DomEvents.dispatchClick($element.get(0));
@@ -110,8 +113,10 @@ describe('PasswordWidget', function() {
 
     describe('click on info button', function() {
       it('calls #showInfo', sinon.test(function() {
+        var node           = document.createElement('input');
+        node.value = '';
         var showInfoStub = this.stub(PasswordWidget.prototype, 'showInfo');
-        var test_obj     = new PasswordWidget(document.createElement('input'));
+        var test_obj     = new PasswordWidget(node);
         var infoButton   = test_obj.infoButton();
         var $element     = $('a', infoButton.domElement);
         DomEvents.dispatchClick($element.get(0));
