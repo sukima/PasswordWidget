@@ -9,10 +9,11 @@
 
   function attachWidgets() {
     loginWidget = new PasswordWidget('#login-pass', {
-      showInfo:     false,
-      showGenerate: false
-    })
-    .attach();
+        showInfoButton:     false,
+        showGenerateButton: false
+      })
+      .on('showInfo', showInfoPopup)
+      .attach();
 
     registrationWidget = new PasswordWidget('#reg-pass')
       .on('showInfo', showInfoPopup)

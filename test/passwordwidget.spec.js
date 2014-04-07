@@ -7,12 +7,12 @@ describe('PasswordWidget', function() {
     setFixtures('<input id="test-input" type="password" value="" />');
     this.$pwNode = $('#test-input');
     this.pwWidget = new PasswordWidget(this.$pwNode.get(0), {
-      showInfo:          false,
-      showMask:          false,
-      showGenerateLink:  false,
-      showStrength:      false,
-      showStrengthText:  false,
-      showBlinkenlights: false
+      showInfoButton:     false,
+      showMaskButton:     false,
+      showGenerateButton: false,
+      showStrength:       false,
+      showStrengthText:   false,
+      showBlinkenlights:  false
     });
   });
 
