@@ -127,8 +127,13 @@ describe('PasswordWidget', function() {
       this.result = this.pwWidget.updateIndicators();
     });
 
-    it('emits an "update" event', function() {
-      sinon.assert.called(this.callback);
+    it('emits an "update" event with computed information values', function() {
+      sinon.assert.calledWith(this.callback, sinon.match({
+        password: sinon.match.string,
+        score:    sinon.match.number,
+        flags:    sinon.match.number,
+        isCommon: sinon.match.bool
+      }));
     });
 
     testChainability();
