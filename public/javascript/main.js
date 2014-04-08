@@ -1,5 +1,6 @@
 (function() {
   var loginWidget, registrationWidget;
+  var commonPasswordsUrl = '/commonPasswords.json';
 
   function showInfoPopup(e) {
     var dialog = $('#password-widget-info-dialog');
@@ -21,4 +22,17 @@
   }
 
   $(attachWidgets);
+
+  $.getJSON(commonPasswordsUrl)
+    .done(function(data) {
+      PasswordWidget.CommonPasswords.setPasswords(data);
+      $.AlertBox.success('Common password list downloaded and activated.');
+    })
+    .fail(function(reason) {
+      $.AlertBox.danger(
+        'Error downloading "' + commonPasswordsUrl + '" ' +
+        reason.responseText
+      );
+    });
+
 })();
