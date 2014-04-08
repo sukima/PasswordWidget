@@ -262,6 +262,14 @@ describe('PasswordWidget', function() {
       sandbox.restore();
     });
 
+    describe('#inputNode', function() {
+      it('returns the original password input node', function() {
+        var element = this.pwWidget.inputNode();
+        expect(element).to.be.a(DOMBuilder);
+        expect(element.domElement).to.be(this.$pwNode.get(0));
+      });
+    });
+
     describe('#showHideButton', function() {
       beforeEach(function() {
         this.pwWidget.isMasked = true;
