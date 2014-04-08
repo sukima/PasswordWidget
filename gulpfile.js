@@ -74,8 +74,7 @@ gulp.task('bower', function() {
 
 gulp.task('serve', ['bower', 'main'], serve([
   config.destDir,
-  'public',
-  'commonPasswords.json'
+  'public'
 ]));
 
 gulp.task('clean', function() {
