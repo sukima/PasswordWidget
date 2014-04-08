@@ -44,6 +44,20 @@ describe('PasswordWidget', function() {
     });
   }
 
+  function testEventCallback(eventName, expectedEventObject) {
+    it('fires "' + eventName + '" with proper event object', function() {
+      // TODO: fix after aemitter is patched (see below)
+      expectedEventObject.context = sinon.match.instanceOf(PasswordWidget);
+      sinon.assert.calledWith(this.callback, sinon.match(expectedEventObject));
+    });
+
+    // TODO: aemitter does not support proper context yet
+    // https://github.com/MatthewMueller/aemitter/pull/1
+    // it('fires "' + eventName + '" with proper context', function() {
+    //   sinon.assert.calledOn(this.callback, this.pwWidget);
+    // });
+  }
+
   function testAttachBehaviour() {
     it('appends a wrapper with class "password-widget"', function() {
       $expect(this.container)
@@ -106,7 +120,7 @@ describe('PasswordWidget', function() {
         var showHideButton = test_obj.showHideButton();
         var $element       = $('a', showHideButton.domElement);
         DomEvents.dispatchClick($element.get(0));
-        sinon.assert.calledWith(setMaskStub);
+        sinon.assert.called(setMaskStub);
       }));
     });
 
@@ -118,7 +132,7 @@ describe('PasswordWidget', function() {
         var infoButton   = test_obj.infoButton();
         var $element     = $('a', infoButton.domElement);
         DomEvents.dispatchClick($element.get(0));
-        sinon.assert.calledWith(showInfoStub);
+        sinon.assert.called(showInfoStub);
       }));
     });
 
@@ -130,7 +144,7 @@ describe('PasswordWidget', function() {
         var generateButton = test_obj.generateButton();
         var $element       = $('a', generateButton.domElement);
         DomEvents.dispatchClick($element.get(0));
-        sinon.assert.calledWith(generateStub);
+        sinon.assert.called(generateStub);
       }));
     });
   });
@@ -142,16 +156,14 @@ describe('PasswordWidget', function() {
       this.result = this.pwWidget.updateIndicators();
     });
 
-    it('emits an "update" event with computed information values', function() {
-      sinon.assert.calledWith(this.callback, sinon.match({
-        password: sinon.match.string,
-        score:    sinon.match.number,
-        flags:    sinon.match.number,
-        isCommon: sinon.match.bool
-      }));
-    });
-
     testChainability();
+
+    testEventCallback('update', {
+      password: sinon.match.string,
+      score:    sinon.match.number,
+      flags:    sinon.match.number,
+      isCommon: sinon.match.bool
+    });
   });
 
   describe('#setMask', function() {
@@ -169,11 +181,11 @@ describe('PasswordWidget', function() {
       sinon.assert.calledWith(setAttrStub, 'type', 'text');
     }));
 
-    it('emits an "showHidePassword" event with {isMasked: boolean}', function() {
-      sinon.assert.calledWith(this.callback, sinon.match({isMasked: sinon.match.bool}));
-    });
-
     testChainability();
+
+    testEventCallback('showHidePassword', {
+      isMasked: sinon.match.bool
+    });
   });
 
   describe('#showInfo', function() {
@@ -199,8 +211,8 @@ describe('PasswordWidget', function() {
     describe('with attached "showInfo" event listener', function() {
       beforeEach(function() {
         this.showAlertStub.reset();
-        this.showInfoCallback = sandbox.spy();
-        this.pwWidget.on('showInfo', this.showInfoCallback);
+        this.callback = sandbox.spy();
+        this.pwWidget.on('showInfo', this.callback);
         this.pwWidget.showInfo();
       });
 
@@ -208,8 +220,8 @@ describe('PasswordWidget', function() {
         sinon.assert.notCalled(this.showAlertStub);
       });
 
-      it('fires a "showInfo" event with {infoText: string}', function() {
-        sinon.assert.calledWith(this.showInfoCallback, sinon.match({infoText: sinon.match.string}));
+      testEventCallback('showInfo', {
+        infoText: sinon.match.string
       });
     });
   });
@@ -222,10 +234,6 @@ describe('PasswordWidget', function() {
       this.result = this.pwWidget.generate();
     });
 
-    it('fires a "generatePassword" event with {password: string}', function() {
-      sinon.assert.calledWith(this.callback, sinon.match({password: sinon.match.string}));
-    });
-
     it('changes the input element\'s value', function() {
       $expect(this.$pwNode)
         .to.not.have.value('')
@@ -233,6 +241,10 @@ describe('PasswordWidget', function() {
     });
 
     testChainability();
+
+    testEventCallback('generatePassword', {
+      password: sinon.match.string
+    });
   });
 
   describe('UI Components', function() {
